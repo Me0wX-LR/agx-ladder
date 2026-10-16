@@ -19,28 +19,32 @@
 </head>
 <body>
   <h1>AGX ladder</h1>
-  <p>Poker and tank tiers for the COMP7607 matches on agx.cool. The ladder is offline.</p>
-  <p><a id="ladder" href="#">Open the ladder</a></p>
+  <p id="blurb">Poker and tank tiers for the COMP7607 matches on agx.cool.</p>
+  <p><a id="ladder" href="#" hidden>Open the ladder</a></p>
   <p id="status" class="muted"></p>
   <script>
     const link = document.getElementById("ladder");
     const status = document.getElementById("status");
-    fetch("./tunnel.json", { cache: "no-store" })
+    const blurb = document.getElementById("blurb");
+    fetch("./tunnel.json?t=" + Date.now(), { cache: "no-store" })
       .then((response) => {
         if (!response.ok) throw new Error(String(response.status));
         return response.json();
       })
       .then((data) => {
         if (!data.url) {
-          link.removeAttribute("href");
+          link.hidden = true;
+          blurb.textContent = "Poker and tank tiers for the COMP7607 matches on agx.cool. The ladder is offline.";
           status.textContent = "The ladder is offline.";
           return;
         }
+        link.hidden = false;
         link.href = data.url;
         status.textContent = data.updated ? "Tunnel updated " + data.updated : "";
       })
       .catch(() => {
-        link.removeAttribute("href");
+        link.hidden = true;
+        blurb.textContent = "Poker and tank tiers for the COMP7607 matches on agx.cool. The ladder is offline.";
         status.textContent = "No tunnel is published yet.";
       });
   </script>
