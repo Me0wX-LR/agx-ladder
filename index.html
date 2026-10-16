@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AGX ladder</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 36rem;
+      margin: 4rem auto;
+      padding: 0 1.25rem;
+      line-height: 1.5;
+    }
+    a { font-size: 1.2rem; }
+    .muted { opacity: 0.7; }
+  </style>
+</head>
+<body>
+  <h1>AGX ladder</h1>
+  <p>Poker and tank tiers for the COMP7607 matches on agx.cool. This page points at the current temporary tunnel.</p>
+  <p><a id="ladder" href="#">Open the ladder</a></p>
+  <p id="status" class="muted"></p>
+  <script>
+    const link = document.getElementById("ladder");
+    const status = document.getElementById("status");
+    fetch("./tunnel.json", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error(String(response.status));
+        return response.json();
+      })
+      .then((data) => {
+        if (!data.url) {
+          link.removeAttribute("href");
+          status.textContent = "The tunnel is opening. Refresh in a minute.";
+          return;
+        }
+        link.href = data.url;
+        status.textContent = data.updated ? "Tunnel updated " + data.updated : "";
+      })
+      .catch(() => {
+        link.removeAttribute("href");
+        status.textContent = "No tunnel is published yet.";
+      });
+  </script>
+</body>
+</html>
