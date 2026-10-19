@@ -34,8 +34,8 @@
       .then((data) => {
         if (!data.url) {
           link.hidden = true;
-          blurb.textContent = "Poker and tank tiers for the COMP7607 matches on agx.cool. The ladder is offline.";
-          status.textContent = "The ladder is offline.";
+          blurb.textContent = "Poker and tank tiers for the COMP7607 matches on agx.cool. The ladder is offline. Tunnel may have expired — ask the agent to rotate it.";
+          status.textContent = "The ladder is offline. Tunnel may have expired — ask the agent to rotate it.";
           return;
         }
         link.hidden = false;
@@ -44,8 +44,8 @@
       })
       .catch(() => {
         link.hidden = true;
-        blurb.textContent = "Poker and tank tiers for the COMP7607 matches on agx.cool. The ladder is offline.";
-        status.textContent = "No tunnel is published yet.";
+        blurb.textContent = "Poker and tank tiers for the COMP7607 matches on agx.cool. The ladder is offline. Tunnel may have expired — ask the agent to rotate it.";
+        status.textContent = "Could not load tunnel.json (network or Pages lag). Retry, or ask the agent to rotate the tunnel.";
       });
   </script>
 </body>
